@@ -16,4 +16,46 @@ config.inactive_pane_hsb = {
   saturation = 0.7,
   brightness = 0.1
 }
+config.debug_key_events = true
+-- keymaps
+config.leader = { key = "k", mods="CTRL", timeout_milliseconds = 2000}
+config.keys = {
+  -- Leader | to split horizontal
+
+  {
+    key = ']',
+    mods = 'LEADER',
+    action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' }
+  },
+  {
+    key = '[',
+    mods = 'LEADER',
+    action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' }
+  },
+  {
+    key = 'x',
+    mods = 'LEADER',
+    action = wezterm.action.CloseCurrentPane { confirm = false }
+  },
+  {
+    key = 'k',
+    mods = 'LEADER',
+    action = wezterm.action.AdjustPaneSize { 'Up', 5 }
+ },
+ {
+  key = 'j',
+   mods = 'LEADER',
+   action = wezterm.action.AdjustPaneSize { 'Down', 5 }
+ },
+ {
+   key = 'l',
+   mods = 'LEADER',
+   action = wezterm.action.AdjustPaneSize {'Right', 5}
+ },
+ {
+   key = 'h',
+   mods = 'LEADER',
+   action = wezterm.action.AdjustPaneSize { 'Left', 5 }
+ }
+}
 return config
