@@ -8,6 +8,12 @@ config.font = wezterm.font("MonoLisa")
 
 -- appearance
 
+if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
+  -- Use PowerShell 7 on Windows.
+  -- This requires 'pwsh.exe' to be in your system's PATH.
+  config.default_prog = { 'pwsh.exe', '-NoLogo' }
+end
+
 config.window_decorations = "RESIZE"
 config.hide_tab_bar_if_only_one_tab = true
 config.window_background_image = constants.bg_image
