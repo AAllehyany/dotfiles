@@ -8,6 +8,6 @@ I will probably include a `nvim` config? Idk.
 On `MAC OS`, you can use `stow` to link these config files with their respective
 config files on your home directory:
 ```shell
-stow helix wezterm
+stow .
 ```
 
