@@ -16,16 +16,76 @@ require('mini.deps').setup({ path = { package = path_package } })
 
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 now(function() require('mini.ai').setup() end)
+add({ source = 'Shatur/neovim-ayu' })
+add({ source = 'neovim/nvim-lspconfig' })
 now(function()
-  require('mini.pick').setup() 
+  require('mini.pick').setup()
 end)
 now(function()
-    
+  require('ayu').setup({
+    mirage = true,
+    overrides = {}
+  })
+  vim.cmd('colorscheme ayu-mirage')
+  vim.api.nvim_create_autocmd('LspAttach', {
+    desc = 'LSP actions',
+    callback = function(event)
+      local opts = { buffer = event.buf }
+
+      -- Display documentation of the symbol under the cursor
+      vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
+
+      -- Jump to the definition
+      vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
+
+      -- Format current file
+      vim.keymap.set({ 'n', 'x' }, 'gq', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
+
+      -- Displays a function's signature information
+      vim.keymap.set('i', '<C-s>', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
+
+      -- Jump to declaration
+      vim.keymap.set('n', '<leader>gd', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
+
+      -- Lists all the implementations for the symbol under the cursor
+      vim.keymap.set('n', '<leader>gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
+
+      -- Jumps to the definition of the type symbol
+      vim.keymap.set('n', '<leader>gt', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
+
+      -- Lists all the references
+      vim.keymap.set('n', '<leader>gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
+
+      -- Renames all references to the symbol under the cursor
+      vim.keymap.set('n', '<leader>gn', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
+
+      -- Selects a code action available at the current cursor position
+      vim.keymap.set('n', '<leader>ga', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
+    end,
+  })
+  vim.lsp.enable('lua_ls')
+  vim.lsp.enable('astro')
+  vim.lsp.enable('eslint')
+  vim.lsp.enable('ts_ls')
+  vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
+  vim.cmd([[
+    highlight Normal guibg=NONE ctermbg=NONE
+    highlight NonText guibg=NONE ctermbg=NONE
+    highlight LineNr guibg=NONE ctermbg=NONE
+    highlight Folded guibg=NONE ctermbg=NONE
+    highlight EndOfBuffer guibg=NONE ctermbg=NONE
+    highlight SignColumn guibg=NONE ctermbg=NONE
+    "highlight CursorLine guibg=NONE ctermbg=NONE
+    "highlight CursorColumn guibg=NONE ctermbg=NONE
+    highlight ColorColumn guibg=NONE ctermbg=NONE
+    highlight NormalFloat guibg=NONE ctermbg=NONE
+    highlight FloatBorder guibg=NONE ctermbg=NONE
+  ]])
   vim.g.mapleader = ' '
   vim.g.maplocalleader = ' '
   vim.o.number = true
   vim.o.relativenumber = true
-  vim.o.cursorline = true 
+  vim.o.cursorline = true
   vim.o.wrap = false
   vim.o.scrolloff = 10
   vim.o.sidescrolloff = 8
@@ -34,7 +94,6 @@ now(function()
   vim.o.shiftwidth = 2
   vim.o.softtabstop = 2
   vim.o.expandtab = true
-  vim.opt.smartindent = true
   vim.o.autoindent = true
 
   vim.o.ignorecase = true
@@ -45,28 +104,18 @@ now(function()
 
   vim.o.termguicolors = true
   vim.o.showmatch = true
-  vim.o.cmdheight = 1
-  vim.o.matchtime = 2
-  vim.o.completeopt = "menuone,noinsert,noselect"
   vim.o.showmode = false
   vim.o.pumheight = 10
   vim.o.pumblend = 10
-  vim.o.winblend = 0
-  vim.o.conceallevel = 0
-  vim.o.concealcursor = ""
-  vim.o.synmaxcol = 300
 
   vim.o.backup = false
   vim.o.writebackup = false
   vim.o.swapfile = false
   vim.o.undofile = true
   vim.o.undodir = vim.fn.expand("~/.vim/undodir")
-  vim.o.updatetime = 300
-  vim.o.timeoutlen = 500
-  vim.o.ttimeoutlen = 0
   vim.o.autoread = true
   vim.o.autowrite = false
-  vim.o.clipboard = "unnamedplus"
+  vim.o.clipboard = "unnamed,unnamedplus"
   vim.o.hidden = true
   vim.o.errorbells = false
   vim.o.backspace = "indent,eol,start"
@@ -88,18 +137,20 @@ now(function()
   vim.keymap.set('n', '<leader>-', ':resize -2<CR>', { desc = 'Decrease height' })
   vim.keymap.set('n', '<leader>>', ':vertical resize +2<CR>', { desc = 'Increase width' })
   vim.keymap.set('n', '<leader><', ':vertical resize -2<CR>', { desc = 'Decrease width' })
-  vim.keymap.set('n', '<leader>=', '<C-w>=', { desc = 'Equal splits' }) 
+  vim.keymap.set('n', '<leader>=', '<C-w>=', { desc = 'Equal splits' })
 
-  vim.keymap.set('v', '<', '<gv', { desc = 'Indent left and reselect'})
-  vim.keymap.set('v', '>', '>gv', { desc = 'Indent right and reselect'})
+  vim.keymap.set('v', '<', '<gv', { desc = 'Indent left and reselect' })
+  vim.keymap.set('v', '>', '>gv', { desc = 'Indent right and reselect' })
 
+  vim.keymap.set('n', '<leader>j', '<C-d>zz', { desc = 'Jump half page and center cursor' })
+  vim.keymap.set('n', '<leader>k', '<C-u>zz', { desc = 'Jump half page and center cursor' })
   vim.keymap.set('n', '<leader>ff', function()
     require('mini.pick').builtin.files()
-  end, {desc = 'Find files'})
+  end, { desc = 'Find files' })
   vim.keymap.set('n', '<leader>fb', function()
     require('mini.pick').builtin.buffers()
-  end, { desc = '[F]ind [B]uffers'})
+  end, { desc = '[F]ind [B]uffers' })
   vim.keymap.set('n', '<leader>fr', function()
     require('mini.pick').builtin.resume()
-  end, {desc = '[R]esume'})
+  end, { desc = '[R]esume' })
 end)
