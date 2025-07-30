@@ -40,6 +40,22 @@ now(function()
     callback = function(event)
       local opts = { buffer = event.buf }
 
+      local client = vim.lsp.get_client_by_id(event.data.client_id)
+      if not client then return end
+
+      if client.supports_method('textDocument/formatting') then
+        vim.keymap.set('n', '<leader>fw', function()
+          vim.lsp.buf.format({ async = false, buffer = event.buffer, id = client.id })
+          vim.cmd('w')
+        end, { desc = 'Format and Save' })
+      end
+      -- vim.api.nvim_create_autocmd('BufWritePre', {
+      --   buffer = event.buf,
+      --   callback = function()
+      --     vim.lsp.buf.format({ bufnr = event.buffer, id = client.id })
+      --   end,
+      -- })
+      -- end
       vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
       vim.keymap.set('i', '<C-s>', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
       vim.keymap.set('n', '<leader>gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
