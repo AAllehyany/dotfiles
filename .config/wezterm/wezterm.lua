@@ -30,7 +30,6 @@ config.debug_key_events = true
 -- keymaps
 config.leader = { key = "k", mods="CTRL", timeout_milliseconds = 2000}
 config.keys = {
-  -- Leader | to split horizontal
 
   {
     key = ']',
