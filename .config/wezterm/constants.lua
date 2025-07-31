@@ -10,7 +10,9 @@ local home = os.getenv("HOME") or os.getenv("USERPROFILE")
 
 -- Define the path components
 local path_parts = { home, ".config", "wezterm", "assets", "bg_blurred.png" }
+local mascot_part = { home, ".config", "wezterm", "assets", "terminal-mascot.png" }
 
 -- Concatenate the parts with the correct separator
 M.bg_image = table.concat(path_parts, sep)
+M.mascot_image = table.concat(mascot_part, sep)
 return M

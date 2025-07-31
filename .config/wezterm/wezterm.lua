@@ -21,7 +21,25 @@ config.hide_tab_bar_if_only_one_tab = true
 config.tab_bar_at_bottom = true
 config.use_fancy_tab_bar = false
 -- config.window_background_image = constants.bg_image
-config.window_background_opacity = 0.6
+config.background = {
+  {
+    source = { Color = 'black' },
+    opacity = 0.6,
+    width = '100%',
+    height = '100%'
+  }, 
+  {
+    source = { File = constants.mascot_image},
+    repeat_x = 'NoRepeat',
+    vertical_align = 'Bottom',
+    repeat_y = 'NoRepeat',
+    width = 1000,
+    height = 1000,
+    opacity = 0.1,
+    horizontal_align = 'Right',
+    vertical_offset = 90
+  }
+}
 config.macos_window_background_blur = 30 
 config.color_scheme = 'ayu'
 config.inactive_pane_hsb = {
