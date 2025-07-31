@@ -14,7 +14,9 @@ if not vim.loop.fs_stat(mini_path) then
 end
 require('mini.deps').setup({ path = { package = path_package } })
 require('mini.snippets').setup()
+require('mini.surround').setup()
 require('mini.completion').setup()
+require('mini.files').setup()
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 now(function() require('mini.ai').setup() end)
 add({ source = 'Shatur/neovim-ayu' })
@@ -164,4 +166,7 @@ now(function()
   vim.keymap.set('n', '<leader>/', function() 
     require('mini.pick').builtin.grep_live()
   end, { desc = 'Live search' })
+  vim.keymap.set('n', '<leader>t', function()
+    require('mini.files').open()
+  end, { desc = 'Open Mini files explorer' })
 end)
