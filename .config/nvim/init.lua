@@ -13,7 +13,8 @@ if not vim.loop.fs_stat(mini_path) then
   vim.cmd('echo "Installed `mini.nvim`" | redraw')
 end
 require('mini.deps').setup({ path = { package = path_package } })
-
+require('mini.snippets').setup()
+require('mini.completion').setup()
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 now(function() require('mini.ai').setup() end)
 add({ source = 'Shatur/neovim-ayu' })
@@ -71,6 +72,8 @@ now(function()
   vim.lsp.enable('astro')
   vim.lsp.enable('eslint')
   vim.lsp.enable('ts_ls')
+  vim.lsp.enable('emmet_ls')
+  vim.lsp.enable('gopls')
   vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
   vim.cmd([[
     highlight Normal guibg=NONE ctermbg=NONE
@@ -157,4 +160,7 @@ now(function()
   vim.keymap.set('n', '<leader>fr', function()
     require('mini.pick').builtin.resume()
   end, { desc = '[R]esume' })
+  vim.keymap.set('n', '<leader>/', function() 
+    require('mini.pick').builtin.grep_live()
+  end, { desc = 'Live search' })
 end)
