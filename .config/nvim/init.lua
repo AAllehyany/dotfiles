@@ -24,7 +24,7 @@ now(function()
 end)
 now(function()
   require('ayu').setup({
-    mirage = true,
+    mirage = false,
     overrides = {}
   })
   vim.cmd('colorscheme ayu-mirage')
@@ -72,7 +72,8 @@ now(function()
   vim.lsp.enable('astro')
   vim.lsp.enable('eslint')
   vim.lsp.enable('ts_ls')
-  vim.lsp.enable('emmet_ls')
+  vim.lsp.enable('emmet_language_server')
+  -- vim.lsp.enable('emmet_ls')
   vim.lsp.enable('gopls')
   vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
   vim.cmd([[
