@@ -12,6 +12,7 @@ if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
   -- Use PowerShell 7 on Windows.
   -- This requires 'pwsh.exe' to be in your system's PATH.
   config.default_prog = { 'pwsh.exe', '-NoLogo' }
+  config.default_domain = 'WSL:Ubuntu-24.04'
 end
 
 config.initial_cols = 100
