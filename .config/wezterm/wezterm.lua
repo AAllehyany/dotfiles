@@ -35,7 +35,7 @@ config.background = {
     repeat_y = 'NoRepeat',
     width = 1000,
     height = 1362,
-    opacity = 0.05,
+    opacity = 0.1,
     horizontal_align = 'Right',
     vertical_offset = 200
   }
