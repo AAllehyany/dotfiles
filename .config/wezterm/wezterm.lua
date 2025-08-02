@@ -29,15 +29,15 @@ config.background = {
     height = '100%'
   }, 
   {
-    source = { File = constants.mascot_image},
+    source = { File = constants.saudi_mascot_path},
     repeat_x = 'NoRepeat',
     vertical_align = 'Bottom',
     repeat_y = 'NoRepeat',
     width = 1000,
-    height = 1000,
-    opacity = 0.1,
+    height = 1362,
+    opacity = 0.05,
     horizontal_align = 'Right',
-    vertical_offset = 90
+    vertical_offset = 200
   }
 }
 config.macos_window_background_blur = 30 
