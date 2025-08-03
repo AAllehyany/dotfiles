@@ -22,31 +22,76 @@ config.hide_tab_bar_if_only_one_tab = true
 config.tab_bar_at_bottom = true
 config.use_fancy_tab_bar = false
 -- config.window_background_image = constants.bg_image
-config.background = {
-  {
-    source = { Color = 'black' },
-    opacity = 0.6,
-    width = '100%',
-    height = '100%'
-  }, 
-  {
-    source = { File = constants.saudi_mascot_path},
-    repeat_x = 'NoRepeat',
-    vertical_align = 'Bottom',
-    repeat_y = 'NoRepeat',
-    width = 1000,
-    height = 1362,
-    opacity = 0.1,
-    horizontal_align = 'Right',
-    vertical_offset = 200
-  }
-}
+-- This function calculates and applies the correctly-sized background
+local function set_dynamic_background(window)
+  local aspect_ratio = 1000 / 1362
+
+  local height_scale = 0.6
+
+  local offset_scale = 0.02
+
+  -- Get the pixel dimensions of the current window
+  local dims = window:get_dimensions()
+  if not dims.pixel_height or dims.pixel_height == 0 then
+    return
+  end
+  
+  local image_height_px = dims.pixel_height * height_scale
+  local image_width_px = image_height_px * aspect_ratio
+
+  local vertical_offset_px = dims.pixel_height * offset_scale
+  local horizontal_offset_px = dims.pixel_width * offset_scale
+
+  window:set_config_overrides({
+    background = {
+      {
+        source = { Color = 'black' },
+        opacity = 0.6,
+        width = '100%',
+        height = '100%'
+      },
+      {
+        source = { File = constants.saudi_mascot_path },
+        opacity = 0.1,
+        width = image_width_px,
+        height = image_height_px,
+        vertical_offset = vertical_offset_px,
+        horizontal_offset = horizontal_offset_px,
+        repeat_x = 'NoRepeat',
+        repeat_y = 'NoRepeat',
+        horizontal_align = 'Right',
+        vertical_align = 'Bottom',
+      },
+    },
+  })
+end
+-- config.background = {
+--   {
+--     source = { Color = 'black' },
+--     opacity = 0.6,
+--     width = '100%',
+--     height = '100%'
+--   }, 
+--   {
+--     source = { File = constants.saudi_mascot_path},
+--     repeat_x = 'NoRepeat',
+--     vertical_align = 'Bottom',
+--     repeat_y = 'NoRepeat',
+--     width = "10cell",
+--     height = "cell",
+--     opacity = 0.05,
+--     horizontal_align = 'Right',
+--   }
+-- }
 config.macos_window_background_blur = 30 
 config.color_scheme = 'ayu'
 config.inactive_pane_hsb = {
   saturation = 0.7,
   brightness = 0.1
 }
+wezterm.on('window-resized', function(window, pane)
+  set_dynamic_background(window)
+end)
 config.debug_key_events = true
 -- keymaps
 config.leader = { key = "k", mods="CTRL", timeout_milliseconds = 2000}

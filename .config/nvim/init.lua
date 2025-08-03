@@ -21,6 +21,7 @@ local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 now(function() require('mini.ai').setup() end)
 add({ source = 'Shatur/neovim-ayu' })
 add({ source = 'neovim/nvim-lspconfig' })
+add({ source = 'pgdouyon/vim-yin-yang' })
 now(function()
   require('mini.pick').setup()
 end)
@@ -29,7 +30,8 @@ now(function()
     mirage = false,
     overrides = {}
   })
-  vim.cmd('colorscheme ayu-mirage')
+  vim.o.background = 'dark'
+  vim.cmd('colorscheme yin')
   local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
   function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
     opts = opts or {}
