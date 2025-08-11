@@ -20,6 +20,7 @@ require('mini.files').setup()
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 now(function() require('mini.ai').setup() end)
 add({ source = 'Shatur/neovim-ayu' })
+add({source = 'vague2k/vague.nvim'})
 add({ source = 'neovim/nvim-lspconfig' })
 add({ source = 'pgdouyon/vim-yin-yang' })
 now(function()
@@ -31,7 +32,7 @@ now(function()
     overrides = {}
   })
   vim.o.background = 'dark'
-  vim.cmd('colorscheme yin')
+  vim.cmd('colorscheme vague')
   local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
   function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
     opts = opts or {}
@@ -73,6 +74,12 @@ now(function()
     end,
   })
   vim.lsp.enable('lua_ls')
+  vim.lsp.config('basedpyright', {
+settings = {
+      basedpyright = { analysis = { autoImportCompletions = true}}
+    }
+  })
+  vim.lsp.enable('basedpyright')
   vim.lsp.enable('astro')
   vim.lsp.enable('eslint')
   vim.lsp.enable('ts_ls')
