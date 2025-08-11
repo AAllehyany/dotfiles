@@ -6,6 +6,41 @@ config.font_size = 18
 config.line_height = 1.2
 config.font = wezterm.font("MonoLisa")
 
+config.color_schemes = {
+  Yin = {
+    background = '#000000',
+    foreground = '#ffffff',
+
+    cursor_bg = '#ffffff',
+    cursor_fg = '#000000',
+    cursor_border = '#ffffff',
+
+    selection_bg = '#262626',
+    selection_fg = '#ffffff',
+
+    ansi = {
+      '#000000',
+      '#ff0000',
+      '#00ff00',
+      '#ffff00',
+      '#0000ff',
+      '#ff00ff',
+      '#00ffff',
+      '#ffffff',
+    },
+
+    brights = {
+      '#808080',
+      '#ff0000',
+      '#00ff00',
+      '#ffff00',
+      '#0000ff',
+      '#ff00ff',
+      '#00ffff',
+      '#ffffff',
+    },
+  },
+}
 -- appearance
 
 if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
@@ -45,8 +80,8 @@ local function set_dynamic_background(window)
   window:set_config_overrides({
     background = {
       {
-        source = { Color = 'black' },
-        opacity = 0.6,
+        source = { Color = '#0a0a0a' },
+        opacity = 0.4,
         width = '100%',
         height = '100%'
       },
@@ -84,7 +119,7 @@ end
 --   }
 -- }
 config.macos_window_background_blur = 30 
-config.color_scheme = 'ayu'
+config.color_scheme = 'Yin'
 config.inactive_pane_hsb = {
   saturation = 0.7,
   brightness = 0.1

@@ -23,7 +23,9 @@ add({ source = 'Shatur/neovim-ayu' })
 add({source = 'vague2k/vague.nvim'})
 add({ source = 'neovim/nvim-lspconfig' })
 add({ source = 'pgdouyon/vim-yin-yang' })
+add( {source = 'ewilazarus/preto' })
 now(function()
+
   require('mini.pick').setup()
 end)
 now(function()
@@ -73,6 +75,16 @@ now(function()
         { buffer = event.buf, desc = 'Show diagnostics' })
     end,
   })
+  require('lspconfig').astro.setup {
+    init_options = {
+      typescript = { tsdk = 'node_modules/typescript/lib' }
+    }
+  }
+  vim.lsp.enable('tailwindcss')
+  vim.lsp.enable('omnisharp')
+  vim.lsp.enable('ruff')
+  vim.lsp.enable('pyright')
+  
   vim.lsp.enable('lua_ls')
   vim.lsp.config('basedpyright', {
 settings = {
