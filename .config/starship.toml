@@ -1,0 +1,4 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+[character]
+format = '[ ](#f5f5f5)'
