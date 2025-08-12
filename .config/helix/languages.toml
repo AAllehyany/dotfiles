@@ -10,3 +10,25 @@ indent = { tab-width = 2, unit = "  "}
 command = "astro-ls"
 args = ["--stdio"]
 
+[language-server.ruff]
+command = "ruff"
+args = ["server", "--preview"]
+
+[language-server.pylsp]
+command = "pylsp"
+except-features = ["diagnostics", "format"]
+
+[language-server.pyright]
+command = "pyright-langserver"
+args = ["--stdio"]
+except-features = ["diagnostics", "format"]
+[language-server.pyright.config.python.analysis]
+typeCheckingMode = "basic"
+autoImportCompletions = true
+autoSearchPaths = true
+
+[[language]]
+name = "python"
+indent = {tab-width = 4, unit = " "}
+language-servers = ["ruff", "pyright"]
+auto-format = true

@@ -20,12 +20,11 @@ require('mini.files').setup()
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 now(function() require('mini.ai').setup() end)
 add({ source = 'Shatur/neovim-ayu' })
-add({source = 'vague2k/vague.nvim'})
+add({ source = 'vague2k/vague.nvim' })
 add({ source = 'neovim/nvim-lspconfig' })
 add({ source = 'pgdouyon/vim-yin-yang' })
-add( {source = 'ewilazarus/preto' })
+add({ source = 'ewilazarus/preto' })
 now(function()
-
   require('mini.pick').setup()
 end)
 now(function()
@@ -75,28 +74,44 @@ now(function()
         { buffer = event.buf, desc = 'Show diagnostics' })
     end,
   })
-  require('lspconfig').astro.setup {
+  vim.lsp.config('astro', {
     init_options = {
-      typescript = { tsdk = 'node_modules/typescript/lib' }
-    }
-  }
-  vim.lsp.enable('tailwindcss')
-  vim.lsp.enable('omnisharp')
-  vim.lsp.enable('ruff')
-  vim.lsp.enable('pyright')
-  
-  vim.lsp.enable('lua_ls')
-  vim.lsp.config('basedpyright', {
-settings = {
-      basedpyright = { analysis = { autoImportCompletions = true}}
+      typescript = {tsdk = 'node_modules/typescript/lib' }
     }
   })
-  vim.lsp.enable('basedpyright')
+  vim.lsp.config('pylsp', {
+    settings = {
+      pylsp = {
+        plugins = {
+          rope = {enabled = true},
+          rope_autoimport = {
+            enabled = true
+          }
+        }
+      }
+    }
+  })
+  vim.lsp.config('basedpyright', {
+    settings  = {
+      basedpyright = { analysis = {
+        autoImportCompletions = true,
+        diagnosticMode = "workspace",
+      }
+    }}
+  })
+  vim.lsp.enable('tailwindcss')
+
+  vim.lsp.enable('omnisharp')
+  vim.lsp.enable('ruff')
+
+  vim.lsp.enable('lua_ls')
+  vim.lsp.enable('ruff')
+  vim.lsp.enable('pylsp')
+  -- vim.lsp.enable('basedpyright')
   vim.lsp.enable('astro')
   vim.lsp.enable('eslint')
   vim.lsp.enable('ts_ls')
   vim.lsp.enable('emmet_language_server')
-  -- vim.lsp.enable('emmet_ls')
   vim.lsp.enable('gopls')
   vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
   vim.cmd([[
@@ -184,7 +199,7 @@ settings = {
   vim.keymap.set('n', '<leader>fr', function()
     require('mini.pick').builtin.resume()
   end, { desc = '[R]esume' })
-  vim.keymap.set('n', '<leader>/', function() 
+  vim.keymap.set('n', '<leader>/', function()
     require('mini.pick').builtin.grep_live()
   end, { desc = 'Live search' })
   vim.keymap.set('n', '<leader>t', function()
