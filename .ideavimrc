@@ -1,144 +1,23 @@
-" .ideavimrc - Configuration for JetBrains Rider
-" Based on your mini.nvim setup
-" -----------------------------------------------------------------------------
-"  Section 1: Core Vim Options (Directly from your init.lua)
-" -----------------------------------------------------------------------------
+set clipboard+=unnamed
+set clipboard+=ideaput
 
-" Leader keys
-let mapleader = " "
+let mapleader=" "
 
-" Editor appearance
-set number
-set relativenumber
-set cursorline
-set nowrap
-set scrolloff=10
-set sidescrolloff=8
-set showmatch
+nnoremap <c-t> :action ActivateTerminalToolWindow<CR>
+nnoremap ]] :action MethodDown<CR>
+nnoremap [[ :action MethodUp<CR>
+nnoremap ]d :action GotoNextError<CR>
+nnoremap [d :action GotoPreviousError<CR>
+nnoremap ]a :action NextParameter<CR>
+nnoremap [a :action PreviousParameter<CR>
 
-" Indentation
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
-set expandtab
-set autoindent
-
-" Search
-set ignorecase
-set smartcase
-set nohlsearch
-set incsearch
-
-" Behavior
-set clipboard=unnamedplus  " Use system clipboard for all operations
-set hidden               " Allow switching buffers without saving
-set nobackup
-set nowritebackup
-set noswapfile
-set backspace=indent,eol,start
-" set mini-ai " This is a Neovim-specific setting and has no effect here.
-" Enable vim-surround emulation (replaces mini.surround)
-set surround
-
-" -----------------------------------------------------------------------------
-"  Section 2: Key Mappings (Bridging Neovim to IDE Actions)
-" -----------------------------------------------------------------------------
-" These mappings use the IDE's built-in actions.
-" Pro-tip: Use `:actionlist [search_term]` to find any IDE action ID.
-
-" --- Window Management ---
-" Standard split commands work out-of-the-box
-nnoremap <leader>s :split<CR>
-nnoremap <leader>v :vsplit<CR>
-
-" Window navigation also works out-of-the-box
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-
-" Window resizing also works out-of-the-box
-nnoremap <leader>+ :resize +2<CR>
-nnoremap <leader>- :resize -2<CR>
-nnoremap <leader>> :vertical resize +2<CR>
-nnoremap <leader>< :vertical resize -2<CR>
-nnoremap <leader>= <C-w>=
-
-set timeoutlen=400
-" --- File/Code Navigation (Replaces mini.pick & LSP mappings) ---
-
-" Find Files (replaces mini.pick for files)
-nnoremap <leader>ff :action GotoFile<CR>
-
-" Find Buffers -> IDE equivalent is "Recent Files"
-nnoremap <leader>fb :action RecentFiles<CR>
-
-" Resume picker -> IDE doesn't have a direct equivalent.
-" We'll map to Search Everywhere, which is the most powerful picker.
-nnoremap <leader>fr :action SearchEverywhere<CR>
-
-" Reload this config file
-nnoremap <C-e> :action IdeaVim.ReloadVimRc.reload<CR>
-" Edit this config file
-nnoremap <leader>r :e ~/.ideavimrc<cr>
-
-" Live Grep (replaces mini.pick grep_live)
-nnoremap <leader>/ :action FindInFiles<CR>
-
-" Toggle Project Tool Window
-nnoremap <leader>t :action ActivateProjectToolWindow<CR>
-
-" --- LSP-like Mappings (using Rider's powerful code intelligence) ---
-
-" Show quick documentation at cursor
-nnoremap K :action QuickDocumentation<CR>
-
-" Show parameter info in insert mode
-inoremap <C-s> :action ParameterInfo<CR>
-
-" Go to implementation
-nnoremap <leader>gi :action GotoImplementation<CR>
-
-" Go to type declaration
-nnoremap <leader>gt :action GotoTypeDeclaration<CR>
-
-" Find usages / references
-nnoremap <leader>gr :action FindUsages<CR>
-
-" Rename element
-nnoremap <leader>gn :action RenameElement<CR>
-
-" Show intention actions / quick fixes (the lightbulb)
-nnoremap <leader>ga :action ShowIntentionActions<CR>
-vnoremap <leader>ga :action ShowIntentionActions<CR>
-
-" Extract Method from a visual selection
-" How to use: Visually select code (`V` or `v`), then press <leader>rm.
-vnoremap <leader>rm :action ExtractMethod<CR>
-
-" Move Type to a new file (or other refactorings)
-" How to use: Place your cursor on a class name, then press <leader>rf.
-nnoremap <leader>rf :action Move<CR>
-
-" Map the main 'Refactor This' menu
+nnoremap gi :action GotoImplementation<cr>
+nnoremap gd :action GotoDeclaration<CR>
+nnoremap gf :action FindUsages<CR>
+nnoremap <leader>rn :action RenameElement<CR>
 nnoremap <leader>rr :action Refactorings.QuickListPopupAction<CR>
+nnoremap <leader>= :action ReformatCode<cr>
+nnoremap <leader>o :action OrganizeImports<cr>
 
-" Show diagnostics/errors at cursor (equivalent to vim.diagnostic.open_float())
-nnoremap <leader>e :action ShowErrorDescription<CR>
-
-" --- Formatting ---
-" Reformat code and save the current file
-nnoremap <leader>fw :action ReformatCode<CR>:action SaveAll<CR>
-
-" --- General Mappings ---
-
-" Toggle distraction free mode
-nnoremap <c-z> :action ToggleDistractionFreeMode<CR>
-
-" Indent and reselect in visual mode
-vnoremap < <gv
-vnoremap > >gv
-
-" Jump half page and center cursor
-nnoremap <leader>j <C-d>zz
-nnoremap <leader>k <C-u>zz
+nnoremap <leader>s :action GotoSymbol<cr>
+nnoremap <leader>ff :action GotoFile<cr>
